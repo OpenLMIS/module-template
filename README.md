@@ -41,6 +41,7 @@ This template is meant to be a starting point for developing new a new OpenLMIS 
   2. add your module as a dependancy to openlmis-web module:
     1. Add your module to `modules/openlmis-web/build.gradle` in the `compile` and if applicable `testCompile` closures.
     2. Import your module into Spring's configuration in `modules/openlmis-web/src/main/resources/applicationContext.xml`:
+      
       ```xml
       <import resource="classpath:/applicationContext-deliver.xml"/>
       ```
