@@ -17,7 +17,7 @@ This template is meant to be a starting point for developing new a new OpenLMIS 
   |            +-- openlmis
   |                +-- deliver
   ```
-4. If your module depends on one or more modules, add them to `build.gradle`.  e.g. to depend on `requistion` and `stock-management`:
+4. If your module depends on one or more modules, add them to your module's `build.gradle`.  e.g. to depend on `requistion` and `stock-management`:
   ```groovy
   dependencies {
       compile project(':modules:requisition'),
@@ -27,9 +27,18 @@ This template is meant to be a starting point for developing new a new OpenLMIS 
       testCompile project(path: ':modules:stock-management', configuration: 'testFixtures')
   }
   ```
-5. If your module needs to be packaged and deployed in the WAR (which is likely):
+5. Add your module to the overall build in `settings.gradle`:
   
-  a. configure your package, dependancies, and beans in the modules applicationContext `src/main/resources/applicationContext-templateModule.xml`.  And then rename this file to the module's name, e.g. `applicationContext-deliver.xml`
+  ```groovy
+  "modules:deliver"
+  ```
+6. If your module needs to be packaged and deployed in the WAR (which is likely):
   
-  b. add your module as a dependancy to openlmis-web module: TODO:  stepify this or fix it with DI
-6. Add your project to your git-repo's local manifest file.
+  1. configure your package, dependancies, and beans in the modules applicationContext `src/main/resources/applicationContext-templateModule.xml`.  And then rename this file to the module's name, e.g. `applicationContext-deliver.xml`
+  2. add your module as a dependancy to openlmis-web module:
+    1. Add your module to `modules/openlmis-web/build.gradle` in the `compile` and if applicable `testCompile` closures.
+    2. Import your module into Spring's configuration in `modules/openlmis-web/src/main/resources/applicationContext.xml`:
+      ```xml
+      <import resource="classpath:/applicationContext-deliver.xml"/>
+      ```
+7. Add your project to your git-repo's local manifest file.
